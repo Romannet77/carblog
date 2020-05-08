@@ -1,0 +1,27 @@
+extends ../layouts/simple.layout.pug
+block variables
+block content
+  include ../components/article.mixing.pug
+  .container
+    include ../components/manager.menu.pug
+    br
+    form#newPostForm(action=post? "/posts/"+post._id+".json":"/posts.json" enctype="multipart/form-data" method=post? 'PUT' : 'POST')
+      .form-group
+        label(for='title') заголовок
+        input#title.form-control(name="title" value=post? post.title: '' type="text" placeholder="заголовок")
+        small#titleHelp.form-text.text-muted Введіть заголовок поста #[span.text-danger]
+      .form-group
+        #image-preview
+        label(for='image') Картинка
+        input#image.form-control(name="image" type="file" placeholder="Автор поста")
+        small#imageHelp.form-text.text-muted Зображення не більше 1мб #[span.text-danger]  
+      .form-group
+        label(for='info') Автор
+        input#info.form-control(name="info" value=post? post.info: '' type="text" placeholder="Автор поста")
+        small#infoeHelp.form-text.text-muted Введіть ім'я автора поста #[span.text-danger]
+      .form-group
+        label(for='intro') Вступ
+        textarea#intro.form-control(name="intro" type="text" placeholder="Текст" rows = "5")=post? post.intro:''
+        small#introHelp.form-text.text-muted Введіть вступний текст поста #[span.text-danger]
+      button.btn.btn-primary(type='submit')=post? 'оновити': 'зберегти'
+    
